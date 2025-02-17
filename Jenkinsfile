@@ -1,30 +1,26 @@
 pipeline {
     agent any  // Runs on any available Jenkins agent
+    tools{
+        maven "MAVEN"
+        jdk "JDK"
+    }
 
     stages {
-        stage('Checkout Code') {
+        stage('Intialize') {
             steps {
-                git url: 'https://github.com/Vedant262004/devops230125.git', branch: 'main'
+                echo "PATH=${MAVEN_HOME}/bin:${PATH}"
+                echo "MAVEN_HOME = /opt/maven"
             }
         }
 
         stage('Build') {
             steps {
-                sh 'mvn clean package'  // Example build command
+                dir("/var/lib/jenkins/workspace/https")
+                sh 'mvn -B -DskipTests clean package'  // Example build command
             }
         }
 
-        stage('Test') {
-            steps {
-                sh 'mvn test'  // Run unit tests
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                sh 'scp target/app.jar user@server:/deploy/path'
-            }
-        }
+        
     }
   post {
         success {
