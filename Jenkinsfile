@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'hhttps://github.com/Vedant262004/devops230125.git'
+                git 'https://github.com/Vedant262004/devops230125.git'
             }
         }
         stage('Build') {
@@ -16,10 +16,14 @@ pipeline {
                 sh 'mvn test'
             }
         }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying application...'
-            }
+        
+    }
+     post {
+        success {
+            echo 'Pipeline executed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed. Check the logs for errors.'
         }
     }
 }
