@@ -1,33 +1,25 @@
 pipeline {
-    agent any  // Runs on any available Jenkins agent
-    tools{
-        maven "MAVEN"
-        jdk "JDK"
-    }
-
+    agent any
     stages {
-        stage('Intialize') {
+        stage('Checkout') {
             steps {
-                echo "PATH=${MAVEN_HOME}/bin:${PATH}"
-                echo "MAVEN_HOME = /opt/maven"
+                git 'hhttps://github.com/Vedant262004/devops230125.git'
             }
         }
-
         stage('Build') {
             steps {
-                dir("/var/lib/jenkins/workspace/https")
-                sh 'mvn -B -DskipTests clean package'  // Example build command
+                sh 'mvn clean package'  // Use appropriate build command (e.g., npm, gradle)
             }
         }
-
-        
-    }
-  post {
-        success {
-            slackSend channel: '#deployments', message: 'Deployment Successful 🎉'
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
         }
-        failure {
-            slackSend channel: '#alerts', message: 'Deployment Failed ❌'
+        stage('Deploy') {
+            steps {
+                echo 'Deploying application...'
+            }
         }
     }
 }
