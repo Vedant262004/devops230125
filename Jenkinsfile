@@ -8,12 +8,12 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'mvn clean package'  // Use appropriate build command (e.g., npm, gradle)
+                bat 'mvn clean package'  // Use appropriate build command (e.g., npm, gradle)
             }
         }
         stage('Test') {
             steps {
-                sh 'mvn test'
+                bat 'mvn test'
             }
         }
         
