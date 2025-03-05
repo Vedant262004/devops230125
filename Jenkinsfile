@@ -20,15 +20,7 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
-            steps {
-                echo 'Stopping any existing application...'
-                bat 'taskkill /F /IM java.exe || echo "No running Java process found"'
-                
-                echo 'Starting new application...'
-                bat 'start /B java -jar target/devops230125.jar'
-            }
-        }
+       
     }
 
     post {
